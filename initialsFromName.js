@@ -18,13 +18,13 @@ let createInitialsFromName = (name) => {
     let b = name2alpha2.substring(0, 1);
     let name2a2cap = b.toUpperCase();
     let finalres2 = name2a1cap.concat(name2a2cap);
-    console.log(finalres2);
+    return finalres2;
   }
 
   function oneString() {
     let name1Subs = name.substring(0, 2);
     let name1Caps = name1Subs.toUpperCase();
-    console.log(name1Caps);
+    return name1Caps;
   }
 
   function threeString() {
@@ -36,7 +36,7 @@ let createInitialsFromName = (name) => {
     let d = name3alpha2.substring(0, 1);
     let name3a2cap = d.toUpperCase();
     let finalres3 = name3a1cap.concat(name3a2cap);
-    console.log(finalres3);
+    return finalres3;
   }
 
   return createInitialsFromName;
