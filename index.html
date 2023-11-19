@@ -1,72 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        input#name:invalid:focus,
+        input#email:invalid:focus,
+        input#dob:invalid:focus {
+            border: 1px solid red;
+        }
+    </style>
 </head>
-<body>
-    
-    <main class="container">
-       <header>
-        <h1>Registration Form</h1>
-     </header>
 
-        <form id="registration-form" action="#">
-            <fieldset>
-                <legend>User Information</legend>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+    <div class="container bg-white shadow-xl rounded-sm w-full sm:w-96 py-6 mb-5">
+        <form id="user-form" class="w-full px-4 sm:px-8">
+            <h1 class="text-2xl font-bold text-center mb-5">Registration Form</h1>
 
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
+            <div class="flex flex-col space-y-4">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required class="border p-2 rounded-md">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required class="border p-2 rounded-md">
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required class="border p-2 rounded-md">
+
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required class="border p-2 rounded-md">
+
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="t&c" name="t&c" required>
+                    <label for="t&c">Accept Terms & Conditions</label>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob" required>
-                    <p id="dobError" class="error-message"></p>
-                </div>
-
-                <div class="form-group">
-                    <label for="terms" class="checkbox-label">
-                        <input type="checkbox" id="terms" name="terms" required>
-                        <span class="checkbox-text">I agree to the terms and conditions.</span>
-                    </label>
-                </div>
-
-                <div class="button-disp">
-                    <button type="submit">Submit</button>
-                </div>
-            </fieldset>
+                <button type="submit" class="w-full bg-green-500 text-white border-none rounded-md p-2 mt-4">Submit</button>
+            </div>
         </form>
+    </div>
 
-        <div class="entries">
-            <h2>Entries</h2>
-            <table id="user-data">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Date of Birth</th>
-                        <th>Accepted terms?</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    <div class="entries bg-white shadow-lg rounded-lg w-full sm:w-96 p-6">
+        <h2 class="text-2xl font-bold mb-5">Entries</h2>
+       <!-- Table headers  <div id="user-entries" class="divide-y divide-gray-300">-->
+            <div id="user-entries">
+                <table class="w-full table-auto">
+                    
+                    <thead>
+                        <tr>
+                            <!-- Table header cells -->
+                        </tr>
+                    </thead>
+                    <!-- Table body -->
+                    <tbody>
+                        <!-- Sample entry rows -->
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </main>
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
+
 
     <script src="index.js"></script>
 </body>
