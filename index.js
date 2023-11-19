@@ -1,89 +1,83 @@
-registrationForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+const dobInput = document.getElementById("dob");
+dobInput.addEventListener("input", () => validate(dobInput.value));
 
-    
- function saveUserData(userData){
-        const userData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
-            dob: document.getElementById('dob').value,
-            terms: document.getElementById('terms').checked
-        }
-        const existingUserData = JSON.parse(localStorage.getItem('userList')) || [];
-        existingUserData.push(userData);
-
-        localStorage.setItem('userList', JSON.stringify(existingUserData));
-    };
-
-    if (!validateUserData(userData)) {
-        const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Date of birth must correspond to an age between 18 and 55.';
-        errorMessage.classList.add('error-message');
-        const dateField = document.getElementById('dob');
-        
-        if (dateField.nextElementSibling && dateField.nextElementSibling.classList.contains('error-message')) {
-            dateField.parentNode.removeChild(dateField.nextElementSibling);
-        }
-        
-        dateField.parentNode.appendChild(errorMessage);
-    } else {
-        const dateField = document.getElementById('dob');
-        if (dateField.nextElementSibling && dateField.nextElementSibling.classList.contains('error-message')) {
-            dateField.parentNode.removeChild(dateField.nextElementSibling);
-        }
-        
-        saveUserData(userData);
-        updateUserDataTable(); 
-        clearForm();
-    }
-});
-
-function validateUserData(userData) {
-    const minAge = 18;
-    const maxAge = 55;
-
+function validate(dobValue) {
     const today = new Date();
-    const birthDate = new Date(userData.dob);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    const dobDate = new Date(dobValue);
 
+    const age = today.getFullYear() - dobDate.getFullYear();
 
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-
-    return age >= minAge && age <= maxAge;
-}
-
-function updateUserDataTable() {
-    const userList = JSON.parse(localStorage.getItem('userList')) || [];
-
-    const userDataTable = document.getElementById('user-data');
-    const userDataTableBody = userDataTable.querySelector('tbody');
-
-    userDataTableBody.innerHTML = '';
-
-    userList.forEach((userData) => {
-        const userDataRow = createUserDataTableRow(userData);
-        userDataTableBody.appendChild(userDataRow);
-    });
-
-    if (userList.length > 0) {
-        userDataTable.classList.remove('hidden');
+    if (age < 18 || age > 55) {
+        dobInput.setCustomValidity("You must be between 18 and 55 years old to register.");
+        dobInput.reportValidity();
     } else {
-        userDataTable.classList.add('hidden');
+        dobInput.setCustomValidity("");
     }
 }
 
-function createUserDataTableRow(userData) {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${userData.name}</td>
-        <td>${userData.email}</td>
-        <td>${userData.password}</td>
-        <td>${new Date(userData.dob).toLocaleDateString()}</td>
-        <td>${userData.terms ? 'true' : 'false'}</td>
-    `;
-    return row;
-}
+let userForm = document.getElementById('user-form');
+
+const retrieveEntries = () => {
+    let entries = localStorage.getItem('userEntries');
+    if (entries) {
+        entries = JSON.parse(entries);
+    } else {
+        entries = [];
+    }
+    return entries;
+};
+
+const displayEntries = () => {
+    const entries = retrieveEntries();
+
+    const tableEntries = entries.map((entry) => {
+        const nameCell = `<td class='border px-4 py-2'>${entry.name}</td>`;
+        const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
+        const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
+        const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`;
+        const t_cCell = `<td class='border px-4 py-2'>${entry.t_c ? 'Yes' : 'No'}</td>`;
+
+        const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${t_cCell}</tr>`;
+        return row;
+    }).join("\n");
+
+    const table = `<table class="table-auto w-full borde border-collapse border-gray-300"">
+        <tr>
+            <th class="px-4 py-2 border">Name</th>
+            <th class="px-4 py-2 border">Email</th>
+            <th class="px-4 py-2 border">Password</th>
+            <th class="px-4 py-2 border">Dob</th>
+            <th class="px-4 py-2 border">Accepted Terms?</th>
+        </tr>
+        ${tableEntries}
+    </table>`;
+
+    let details = document.getElementById('user-entries');
+    details.innerHTML = table;
+};
+
+const saveUserForm = (event) => {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const dob = document.getElementById('dob').value;
+    const t_c = document.getElementById('t&c').checked;
+    
+    const entry = {
+        name: name,
+        email: email,
+        password: password,
+        dob: dob,
+        t_c: t_c
+    };
+    userEntries = retrieveEntries();
+
+    userEntries.push(entry); // Add entry to userEntries array
+
+    localStorage.setItem('userEntries', JSON.stringify(userEntries));
+    displayEntries();
+};
+
+userForm.addEventListener('submit', saveUserForm);
+displayEntries();
