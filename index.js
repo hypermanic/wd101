@@ -35,7 +35,7 @@ const displayEntries = () => {
         const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
         const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
         const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`;
-        const t_cCell = `<td class='border px-4 py-2'>${entry.t_c ? 'true' : 'false'}</td>`;
+        const t_cCell = `<td class='border px-4 py-2'>${entry.t_c ? True : False}</td>`;
 
         const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${t_cCell}</tr>`;
         return row;
