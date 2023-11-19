@@ -1,3 +1,4 @@
+//CLEAR THE DATA IN TABLE
 const dobInput = document.getElementById("dob");
 dobInput.addEventListener("input", () => validate(dobInput.value));
 
