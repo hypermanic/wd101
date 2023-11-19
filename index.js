@@ -1,12 +1,19 @@
 registrationForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const userData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        dob: document.getElementById('dob').value,
-        terms: document.getElementById('terms').checked
+    
+ function saveUserData(userData){
+        const userData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            dob: document.getElementById('dob').value,
+            terms: document.getElementById('terms').checked
+        }
+        const existingUserData = JSON.parse(localStorage.getItem('userList')) || [];
+        existingUserData.push(userData);
+
+        localStorage.setItem('userList', JSON.stringify(existingUserData));
     };
 
     if (!validateUserData(userData)) {
@@ -39,6 +46,7 @@ function validateUserData(userData) {
     const today = new Date();
     const birthDate = new Date(userData.dob);
     const age = today.getFullYear() - birthDate.getFullYear();
+
 
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
