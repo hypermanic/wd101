@@ -40,7 +40,6 @@ function validateUserData(userData) {
     const birthDate = new Date(userData.dob);
     const age = today.getFullYear() - birthDate.getFullYear();
 
-    // Calculate age precisely
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
@@ -50,22 +49,18 @@ function validateUserData(userData) {
 }
 
 function updateUserDataTable() {
-    // Retrieve user data list from localStorage
     const userList = JSON.parse(localStorage.getItem('userList')) || [];
 
     const userDataTable = document.getElementById('user-data');
     const userDataTableBody = userDataTable.querySelector('tbody');
 
-    // Clear existing rows and headers in the table
     userDataTableBody.innerHTML = '';
 
-    // Populate the table with the updated user data
     userList.forEach((userData) => {
         const userDataRow = createUserDataTableRow(userData);
         userDataTableBody.appendChild(userDataRow);
     });
 
-    // Show the table if there is any user data
     if (userList.length > 0) {
         userDataTable.classList.remove('hidden');
     } else {
